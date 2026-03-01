@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishShield AI | Global Intelligence Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="../extension/icons/icon48.png" alt="Logo" class="sidebar-logo">
+                <h2>PhishShield<span>AI</span></h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-view="overview"><i class="fas fa-chart-line"></i>
+                    <span>Overview</span></a>
+                <a href="#" class="nav-item" data-view="threat-map"><i class="fas fa-globe-americas"></i> <span>Threat
+                        Map</span></a>
+                <a href="#" class="nav-item" data-view="live-feed"><i class="fas fa-bolt"></i> <span>Live
+                        Feed</span></a>
+                <a href="#" class="nav-item" data-view="logs"><i class="fas fa-database"></i> <span>System
+                        Logs</span></a>
+                <a href="#" class="nav-item" data-view="admin"><i class="fas fa-shield-halved"></i> <span>Admin
+                        Panel</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="demo-mode-toggle">
+                    <label class="switch">
+                        <input type="checkbox" id="demo-mode-checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                    <span>Demo Simulation</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search suspicious domains...">
+                </div>
+                <div class="user-profile">
+                    <div class="notification-badge"><i class="fas fa-bell"></i><span class="count">3</span></div>
+                    <div class="admin-avatar">A</div>
+                </div>
+            </header>
+
+            <div class="view-container" id="overview-view">
+                <!-- Stat Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon purple"><i class="fas fa-search"></i></div>
+                        <div class="stat-info">
+                            <h3>Total Scanned</h3>
+                            <p class="val" id="total-scanned">12,842</p>
+                            <span class="trend up"><i class="fas fa-arrow-up"></i> 12% vs last week</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon red"><i class="fas fa-ban"></i></div>
+                        <div class="stat-info">
+                            <h3>Malicious Blocked</h3>
+                            <p class="val" id="malicious-blocked">423</p>
+                            <span class="trend up"><i class="fas fa-shield-virus"></i> High Priority</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon yellow"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="stat-info">
+                            <h3>Suspicious</h3>
+                            <p class="val" id="suspicious-count">1,102</p>
+                            <span class="trend down"><i class="fas fa-arrow-down"></i> 4% vs last week</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i class="fas fa-envelope-open-text"></i></div>
+                        <div class="stat-info">
+                            <h3>Phishing Emails</h3>
+                            <p class="val" id="email-phish">89</p>
+                            <span class="trend up"><i class="fas fa-plus"></i> Newly Detected</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-grid">
+                    <div class="chart-card large">
+                        <div class="card-header">
+                            <h4>Threat Detection Trend</h4>
+                            <div class="chart-actions">
+                                <span>7 Days</span>
+                                <i class="fas fa-ellipsis-v"></i>
+                            </div>
+                        </div>
+                        <canvas id="threatTrendChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <h4>Classification Split</h4>
+                        </div>
+                        <canvas id="classificationPieChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <h4>Attack Vectors</h4>
+                        </div>
+                        <canvas id="attackVectorChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Activity Feed -->
+                <div class="bottom-grid">
+                    <div class="activity-card">
+                        <div class="card-header">
+                            <h4>Recent Incidents</h4>
+                            <button class="view-all">View All</button>
+                        </div>
+                        <div class="incident-list" id="incident-feed">
+                            <!-- Items injected by JS -->
+                        </div>
+                    </div>
+                    <div class="map-preview-card">
+                        <div class="card-header">
+                            <h4>Live Threat Map Snippet</h4>
+                        </div>
+                        <div id="mini-map-container" class="map-placeholder">
+                            <i class="fas fa-globe-stand"></i>
+                            <p>Global Intelligence Active</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Views (Simplified for Demo) -->
+            <div class="view-container hidden" id="logs-view">
+                <div class="card logs-card">
+                    <div class="card-header">
+                        <h4>System Analysis Logs</h4>
+                        <button class="export-btn"><i class="fas fa-file-export"></i> Export CSV</button>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Type</th>
+                                <th>Input Source</th>
+                                <th>Risk Score</th>
+                                <th>Result</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logs-tbody">
+                            <!-- Logs injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Live Showcase Overlay (Presentation Mode) -->
+    <div id="showcase-overlay" class="showcase-overlay hidden">
+        <div class="showcase-container">
+            <div class="showcase-header">
+                <h2>AI Intelligence showcase</h2>
+                <button id="close-showcase"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="showcase-demo-pane">
+                <div class="demo-input">
+                    <label>Simulate Threat Injection</label>
+                    <div class="input-group">
+                        <input type="text" id="demo-url-input" placeholder="Enter URL (e.g., bit.ly/secure-pay)">
+                        <button id="run-demo-btn">Analyze AI</button>
+                    </div>
+                </div>
+                <div class="demo-output" id="demo-output">
+                    <div class="empty-state">Ready for Intelligence Analysis</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

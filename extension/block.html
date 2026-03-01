@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PhishShield | Threat Blocked</title>
+    <style>
+        body {
+            background-color: #0d0000;
+            color: #ff4d4d;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 40px;
+            background: rgba(255, 0, 0, 0.05);
+            border: 1px solid #ff4d4d;
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(255, 77, 77, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        p {
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .details {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: left;
+            margin-bottom: 30px;
+            border-left: 4px solid #ff4d4d;
+        }
+
+        .details b {
+            color: #ff4d4d;
+        }
+
+        .url {
+            font-family: monospace;
+            color: #ff9999;
+            word-break: break-all;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-safe {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+        }
+
+        .btn-safe:hover {
+            background: #ff3333;
+            box-shadow: 0 0 20px rgba(255, 77, 77, 0.4);
+        }
+
+        .btn-proceed {
+            background: transparent;
+            color: #ff4d4d;
+            border: 1px solid #ff4d4d;
+        }
+
+        .btn-proceed:hover {
+            background: rgba(255, 77, 77, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="icon">🛡️</div>
+        <h1>Threat Blocked</h1>
+        <p>PhishShield AI has detected a high-risk phishing attempt. This page has been blocked for your protection.</p>
+
+        <div class="details">
+            <div><b>Target URL:</b> <span class="url" id="target-url">Loading...</span></div>
+            <div><b>Risk Score:</b> <span id="risk-score">98</span>/100</div>
+            <div><b>Reason:</b> <span id="reason">AI detected suspicious structural anomalies indicative of a phishing
+                    site.</span></div>
+        </div>
+
+        <div class="actions">
+            <a href="#" class="btn btn-safe" id="go-back">Get the heck out of here</a>
+            <a href="#" class="btn btn-proceed" id="proceed">Proceed Anyway (Not Recommended)</a>
+        </div>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById('target-url').textContent = params.get('url') || 'Unknown';
+        document.getElementById('risk-score').textContent = params.get('score') || '95';
+        document.getElementById('reason').textContent = params.get('reason') || 'Known malicious pattern detected.';
+
+        document.getElementById('go-back').addEventListener('click', () => {
+            window.history.back();
+            if (window.history.length <= 1) window.close();
+        });
+
+        document.getElementById('proceed').addEventListener('click', (e) => {
+            e.preventDefault();
+            if (confirm("WARNING: Proceeding may expose your sensitive data. Are you absolutely sure?")) {
+                window.location.href = params.get('url');
+            }
+        });
+    </script>
+</body>
+
+</html>

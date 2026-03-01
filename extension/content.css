@@ -1,0 +1,54 @@
+/* PhishShield AI Content Styles */
+
+.phish-shield-link-high {
+    background-color: rgba(255, 77, 77, 0.2) !important;
+    border-bottom: 2px solid #ff4d4d !important;
+    cursor: help !important;
+    transition: all 0.3s;
+}
+
+.phish-shield-link-high:hover {
+    background-color: rgba(255, 77, 77, 0.4) !important;
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+}
+
+.phish-shield-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    margin-left: 8px;
+    text-transform: uppercase;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.badge-safe {
+    background-color: #00ff88;
+}
+
+.badge-warn {
+    background-color: #ffcc00;
+    color: black;
+}
+
+.badge-danger {
+    background-color: #ff4d4d;
+    animation: phish-pulse 2s infinite;
+}
+
+@keyframes phish-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 8px rgba(255, 77, 77, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 77, 77, 0);
+    }
+}
