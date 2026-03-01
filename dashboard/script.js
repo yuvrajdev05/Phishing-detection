@@ -197,6 +197,64 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
+    // Admin Blacklist Logic
+    const addBlacklistBtn = document.getElementById('add-blacklist-btn');
+    if (addBlacklistBtn) {
+        addBlacklistBtn.addEventListener('click', async () => {
+            const domain = document.getElementById('blacklist-domain').value;
+            const reason = document.getElementById('blacklist-reason').value;
+            const msg = document.getElementById('admin-msg');
+
+            if (!domain) return;
+
+            try {
+                const res = await fetch('http://localhost:8001/api/admin/blacklist', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ domain, reason })
+                });
+                if (res.ok) {
+                    msg.innerText = "✓ Domain successfully added to global blacklist.";
+                    msg.classList.remove('hidden');
+                    document.getElementById('blacklist-domain').value = '';
+                    setTimeout(() => msg.classList.add('hidden'), 3000);
+                }
+            } catch (err) {
+                msg.innerText = "⚠ Simulated: Domain added to blacklist.";
+                msg.classList.remove('hidden');
+                msg.style.color = '#f59e0b';
+                setTimeout(() => msg.classList.add('hidden'), 3000);
+            }
+        });
+    }
+
+    // Live Feed Simulation Logic
+    const liveTerminal = document.getElementById('live-terminal');
+    const scamTypes = ['Phishing URL', 'Malware Drop', 'Fake Login', 'Credential Harvester'];
+
+    setInterval(() => {
+        if (document.querySelector('.nav-item[data-view="live-feed"]').classList.contains('active')) {
+            const time = new Date().toLocaleTimeString();
+            const ip = `192.168.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+            const isMalicious = Math.random() > 0.7;
+
+            const p = document.createElement('p');
+            if (isMalicious) {
+                p.innerHTML = `<span style="color: #ef4444">[${time}] ALERT</span>: Blocked connection from ${ip} - Cause: <b style="color: #ef4444">${scamTypes[Math.floor(Math.random() * scamTypes.length)]}</b> detected.`;
+            } else {
+                p.innerHTML = `<span style="color: #10b981">[${time}] INFO</span>: Scanned connection from ${ip} - Status: CLEAN.`;
+            }
+
+            liveTerminal.appendChild(p);
+            liveTerminal.scrollTop = liveTerminal.scrollHeight;
+
+            // Keep feed clean
+            if (liveTerminal.children.length > 50) {
+                liveTerminal.removeChild(liveTerminal.children[1]); // keep the initial waiting message
+            }
+        }
+    }, 2500);
+
     // Real-time stat counter simulation
     setInterval(() => {
         if (demoCheckbox.checked) {

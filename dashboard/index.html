@@ -164,6 +164,74 @@
                     </table>
                 </div>
             </div>
+            <!-- Thread Map View -->
+            <div class="view-container hidden" id="threat-map-view">
+                <div class="card full-height">
+                    <div class="card-header">
+                        <h4>Global Threat Map</h4>
+                    </div>
+                    <div class="large-map-placeholder">
+                        <i class="fas fa-globe-americas"></i>
+                        <div class="pulse-point" style="top: 30%; left: 20%;"></div>
+                        <div class="pulse-point" style="top: 50%; left: 60%;"></div>
+                        <div class="pulse-point" style="top: 70%; left: 80%;"></div>
+                        <div class="pulse-point" style="top: 40%; left: 70%;"></div>
+                        <div class="pulse-point" style="top: 60%; left: 30%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Feed View -->
+            <div class="view-container hidden" id="live-feed-view">
+                <div class="card full-height live-feed-card">
+                    <div class="card-header">
+                        <h4>Live Analysis Feed</h4>
+                        <div class="status-indicator"><span class="pulse"></span> <span>Scanning Live Network</span>
+                        </div>
+                    </div>
+                    <div class="live-terminal" id="live-terminal">
+                        <p>> System initialized. Waiting for connections...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin View -->
+            <div class="view-container hidden" id="admin-view">
+                <div class="admin-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Blacklist Management</h4>
+                        </div>
+                        <div class="form-group">
+                            <label>Domain to Block</label>
+                            <input type="text" id="blacklist-domain" placeholder="e.g., malicious-site.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Reason</label>
+                            <input type="text" id="blacklist-reason" placeholder="e.g., Confirmed phishing attempt">
+                        </div>
+                        <button class="export-btn" id="add-blacklist-btn">Add to Blacklist</button>
+                        <p id="admin-msg" class="success-msg hidden"></p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>System Configuration</h4>
+                        </div>
+                        <div class="settings-list">
+                            <div class="setting-item">
+                                <span>Strict AI Mode</span>
+                                <label class="switch"><input type="checkbox" checked><span
+                                        class="slider round"></span></label>
+                            </div>
+                            <div class="setting-item">
+                                <span>External Threat Intel Sync</span>
+                                <label class="switch"><input type="checkbox" checked><span
+                                        class="slider round"></span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 

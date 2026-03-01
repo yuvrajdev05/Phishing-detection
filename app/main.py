@@ -10,6 +10,8 @@ import os
 from datetime import datetime
 
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import RedirectResponse
 
 app = FastAPI(title="PhishShield AI Backend", version="1.0.0")
 
@@ -21,6 +23,16 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Serve dashboard statically
+if os.path.exists("dashboard"):
+    app.mount("/dashboard", StaticFiles(directory="dashboard", html=True), name="dashboard")
+if os.path.exists("extension"):
+    app.mount("/extension", StaticFiles(directory="extension", html=True), name="extension")
+
+@app.get("/")
+async def root():
+    return RedirectResponse(url="/dashboard/index.html")
 
 # MongoDB / In-Memory Fallback
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
